@@ -1,0 +1,331 @@
+"use client";
+
+import React, { useState } from "react";
+import { ToolHeader } from "@/components/ToolHeader";
+import { FileDropzone } from "@/components/FileDropzone";
+import { ProcessingState } from "@/components/ProcessingState";
+import { DownloadCard } from "@/components/DownloadCard";
+import { ErrorAlert } from "@/components/ErrorAlert";
+import { convertPdfToImages, packageImagesToZip, RenderedPageImage } from "@/lib/pdf/pdf-to-images";
+import { downloadBlob, fileToArrayBuffer } from "@/lib/utils";
+import { PDFDocument } from "pdf-lib";
+import { FileImage, Download, FileArchive, ArrowRight, Eye } from "lucide-react";
+
+export default function PdfToImagesPage() {
+  const [file, setFile] = useState<File | null>(null);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [format, setFormat] = useState<"image/jpeg" | "image/png">("image/jpeg");
+  const [scale, setScale] = useState<number>(1.5); // 1.0, 1.5, 2.0
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [progressPercent, setProgressPercent] = useState<number>(0);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [renderedImages, setRenderedImages] = useState<RenderedPageImage[] | null>(null);
+  const [zipBlob, setZipBlob] = useState<Blob | null>(null);
+
+  const handleFileSelected = async (files: File[]) => {
+    if (files.length === 0) return;
+    const selected = files[0];
+    setFile(selected);
+    setErrorMessage(null);
+
+    try {
+      const buffer = await fileToArrayBuffer(selected);
+      const doc = await PDFDocument.load(buffer, { ignoreEncryption: true });
+      setTotalPages(doc.getPageCount());
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setErrorMessage(`Gagal membaca file PDF: ${msg}`);
+      setFile(null);
+    }
+  };
+
+  const handleProcessConvert = async () => {
+    if (!file) return;
+    setIsProcessing(true);
+    setProgressPercent(0);
+    setErrorMessage(null);
+
+    try {
+      const buffer = await fileToArrayBuffer(file);
+      const images = await convertPdfToImages(buffer, file.name, {
+        format,
+        scale,
+        quality: 0.9,
+        onProgress: (current, total) => {
+          setProgressPercent((current / total) * 100);
+        },
+      });
+
+      setRenderedImages(images);
+
+      if (images.length > 1) {
+        const { blob } = await packageImagesToZip(
+          images,
+          `${file.name.replace(/\.pdf$/i, "")}_gambar.zip`
+        );
+        setZipBlob(blob);
+      }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setErrorMessage(msg || "Gagal merender halaman PDF ke gambar.");
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleDownloadSingle = (img: RenderedPageImage) => {
+    downloadBlob(img.blob, img.filename);
+  };
+
+  const handleDownloadZip = () => {
+    if (!zipBlob || !file) return;
+    downloadBlob(zipBlob, `${file.name.replace(/\.pdf$/i, "")}_gambar.zip`);
+  };
+
+  const handleReset = () => {
+    setFile(null);
+    setTotalPages(0);
+    setRenderedImages(null);
+    setZipBlob(null);
+    setErrorMessage(null);
+  };
+
+  return (
+    <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
+      <ToolHeader
+        category="Konversi PDF"
+        title="Ekspor PDF ke Gambar (JPG/PNG)"
+        subtitle="Render setiap halaman PDF menjadi gambar resolusi tinggi langsung di browser tanpa kompresi berlebih."
+      />
+
+      {errorMessage && (
+        <div className="mb-6">
+          <ErrorAlert message={errorMessage} onDismiss={() => setErrorMessage(null)} />
+        </div>
+      )}
+
+      {isProcessing && (
+        <ProcessingState
+          title="Merender Halaman PDF ke Gambar..."
+          subtitle="Menggambar halaman dokumen ke canvas resolusi tinggi secara berurutan."
+          progressPercent={progressPercent}
+        />
+      )}
+
+      {!isProcessing && renderedImages && file && (
+        <div className="space-y-6">
+          <DownloadCard
+            title="Halaman Berhasil Dikonversi ke Gambar!"
+            filename={
+              renderedImages.length === 1
+                ? renderedImages[0].filename
+                : `${renderedImages.length} Gambar Dihasilkan`
+            }
+            onDownload={() => handleDownloadSingle(renderedImages[0])}
+            onDownloadZip={renderedImages.length > 1 ? handleDownloadZip : undefined}
+            zipFilename="gambar_halaman.zip"
+            onReset={handleReset}
+          />
+
+          {/* Gallery of rendered images */}
+          <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-xs space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-bold text-stone-900">
+                Pratinjau Hasil Render ({renderedImages.length} Gambar)
+              </h3>
+              {renderedImages.length > 1 && (
+                <button
+                  type="button"
+                  onClick={handleDownloadZip}
+                  className="inline-flex items-center gap-1.5 rounded-xl bg-stone-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-stone-800 transition-colors"
+                >
+                  <FileArchive className="h-3.5 w-3.5" />
+                  <span>Unduh Semua sebagai ZIP</span>
+                </button>
+              )}
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              {renderedImages.map((img) => (
+                <div
+                  key={img.pageNumber}
+                  className="flex flex-col rounded-xl border border-stone-200 bg-stone-50 p-2 text-center"
+                >
+                  <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-white border border-stone-200 mb-2 flex items-center justify-center">
+                    <img
+                      src={img.dataUrl}
+                      alt={`Halaman ${img.pageNumber}`}
+                      className="max-h-full max-w-full object-contain"
+                    />
+                  </div>
+                  <span className="text-[11px] font-semibold text-stone-700 truncate mb-1">
+                    Hal {img.pageNumber}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleDownloadSingle(img)}
+                    className="inline-flex items-center justify-center gap-1 w-full rounded-lg bg-white border border-stone-200 py-1 text-[11px] font-medium text-stone-700 hover:bg-stone-100 transition-colors"
+                  >
+                    <Download className="h-3 w-3" />
+                    <span>Unduh</span>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {!isProcessing && !renderedImages && (
+        <div>
+          {!file ? (
+            <FileDropzone
+              onFilesSelected={handleFileSelected}
+              multiple={false}
+              title="Pilih file PDF untuk diekspor ke gambar"
+              description="Seret dan lepas dokumen PDF ke sini atau klik tombol untuk memilih."
+              buttonText="Pilih File PDF"
+            />
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="md:col-span-2 space-y-4">
+                <div className="flex items-center justify-between rounded-2xl border border-stone-200 bg-white p-5 shadow-xs">
+                  <div>
+                    <h4 className="text-sm font-bold text-stone-900 truncate max-w-sm">
+                      {file.name}
+                    </h4>
+                    <p className="text-xs text-stone-400">
+                      Total {totalPages} Halaman Siap Dikonversi
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleReset}
+                    className="text-xs font-medium text-stone-400 hover:text-rose-600"
+                  >
+                    Ganti File
+                  </button>
+                </div>
+
+                {/* Configuration Card */}
+                <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-xs space-y-5">
+                  {/* Format */}
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold uppercase tracking-wider text-stone-700 block">
+                      Format Output Gambar
+                    </label>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setFormat("image/jpeg")}
+                        className={`p-3.5 rounded-xl border text-left transition-all ${
+                          format === "image/jpeg"
+                            ? "border-rose-500 bg-rose-50/70 text-rose-800 ring-1 ring-rose-500/20"
+                            : "border-stone-200 bg-white text-stone-700 hover:bg-stone-50"
+                        }`}
+                      >
+                        <span className="font-bold text-sm block">JPG (Standard)</span>
+                        <span className="text-[11px] text-stone-400">
+                          Ukuran file lebih hemat, cocok untuk foto & teks umum
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setFormat("image/png")}
+                        className={`p-3.5 rounded-xl border text-left transition-all ${
+                          format === "image/png"
+                            ? "border-rose-500 bg-rose-50/70 text-rose-800 ring-1 ring-rose-500/20"
+                            : "border-stone-200 bg-white text-stone-700 hover:bg-stone-50"
+                        }`}
+                      >
+                        <span className="font-bold text-sm block">PNG (Lossless)</span>
+                        <span className="text-[11px] text-stone-400">
+                          Kualitas maksimal tanpa kompresi visual
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* DPI / Scale */}
+                  <div className="space-y-2 pt-3 border-t border-stone-100">
+                    <label className="text-xs font-bold uppercase tracking-wider text-stone-700 block">
+                      Resolusi Gambar (Skala Render)
+                    </label>
+                    <div className="grid grid-cols-3 gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setScale(1.0)}
+                        className={`py-2 text-xs font-bold rounded-lg border transition-all ${
+                          scale === 1.0
+                            ? "border-rose-500 bg-rose-50 text-rose-700 ring-1 ring-rose-500/20"
+                            : "border-stone-200 bg-white text-stone-600 hover:bg-stone-50"
+                        }`}
+                      >
+                        Normal (100%)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setScale(1.5)}
+                        className={`py-2 text-xs font-bold rounded-lg border transition-all ${
+                          scale === 1.5
+                            ? "border-rose-500 bg-rose-50 text-rose-700 ring-1 ring-rose-500/20"
+                            : "border-stone-200 bg-white text-stone-600 hover:bg-stone-50"
+                        }`}
+                      >
+                        Tinggi (150% - Tajam)
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setScale(2.0)}
+                        className={`py-2 text-xs font-bold rounded-lg border transition-all ${
+                          scale === 2.0
+                            ? "border-rose-500 bg-rose-50 text-rose-700 ring-1 ring-rose-500/20"
+                            : "border-stone-200 bg-white text-stone-600 hover:bg-stone-50"
+                        }`}
+                      >
+                        Ultra (200% - HiDPI)
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action sidebar */}
+              <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-xs h-fit space-y-4">
+                <h3 className="text-sm font-bold text-stone-900">
+                  Ringkasan Ekspor
+                </h3>
+
+                <div className="text-xs text-stone-600 space-y-2 py-2 border-y border-stone-100">
+                  <div className="flex justify-between">
+                    <span className="text-stone-400">Halaman Dokumen:</span>
+                    <span className="font-semibold">{totalPages} Gambar</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-stone-400">Format:</span>
+                    <span className="font-semibold uppercase">{format === "image/png" ? "PNG" : "JPG"}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-stone-400">Skala:</span>
+                    <span className="font-semibold">{scale * 100}%</span>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleProcessConvert}
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-rose-600 px-4 py-3 text-sm font-bold text-white shadow-md shadow-rose-600/20 hover:bg-rose-700 transition-all cursor-pointer"
+                >
+                  <FileImage className="h-4 w-4" />
+                  <span>Konversi ke Gambar</span>
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
