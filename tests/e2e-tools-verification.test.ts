@@ -9,6 +9,7 @@ import { addWatermarkToPdf } from "../lib/pdf/watermark";
 import { addPageNumbersToPdf } from "../lib/pdf/page-numbers";
 import { optimizePdf } from "../lib/pdf/compress";
 import { packagePdfsToZip } from "../lib/pdf/zip";
+import { packageImagesToZip } from "../lib/pdf/pdf-to-images";
 import { createTestPdf, createTestPngBuffer } from "./fixtures";
 
 describe("E2E Tool-by-Tool Comprehensive Verification", () => {
@@ -147,6 +148,32 @@ describe("E2E Tool-by-Tool Comprehensive Verification", () => {
       expect(result.originalSize).toBeGreaterThan(0);
       expect(result.compressedSize).toBeGreaterThan(0);
       expect(result.compressedBytes.length).toBeGreaterThan(0);
+    });
+  });
+
+  // 9. PDF to JPG
+  describe("Tool 9: PDF to JPG/PNG (/pdf-to-jpg)", () => {
+    it("should package rendered images into a valid downloadable ZIP file", async () => {
+      const dummyBlob = new Blob(["test-image-data"], { type: "image/jpeg" });
+      const renderedImages = [
+        {
+          pageNumber: 1,
+          blob: dummyBlob,
+          dataUrl: "data:image/jpeg;base64,dGVzdA==",
+          filename: "dokumen_halaman_1.jpg",
+        },
+        {
+          pageNumber: 2,
+          blob: dummyBlob,
+          dataUrl: "data:image/jpeg;base64,dGVzdA==",
+          filename: "dokumen_halaman_2.jpg",
+        },
+      ];
+
+      const zipResult = await packageImagesToZip(renderedImages, "dokumen-gambar.zip");
+      expect(zipResult).toBeDefined();
+      expect(zipResult.filename).toBe("dokumen-gambar.zip");
+      expect(zipResult.blob.size).toBeGreaterThan(0);
     });
   });
 });
