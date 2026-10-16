@@ -15,7 +15,6 @@ import {
   ArrowLeft,
   ArrowRight,
   RotateCcw,
-  LayoutGrid,
   Check,
   Undo2,
 } from "lucide-react";
@@ -152,9 +151,8 @@ export default function OrganizePdfPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
       <ToolHeader
-        category="Atur PDF"
-        title="Atur Urutan & Orientasi Halaman PDF"
-        subtitle="Ubah posisi halaman, putar sudut orientasi, atau buang halaman yang tidak diinginkan dengan pratinjau visual instan."
+        title="Atur halaman PDF"
+        subtitle="Urutkan, putar, atau hapus halaman dari dokumen PDF Anda."
       />
 
       {errorMessage && (
@@ -165,15 +163,15 @@ export default function OrganizePdfPage() {
 
       {isLoadingThumbnails && (
         <ProcessingState
-          title="Membuat Pratinjau Halaman..."
-          subtitle="Merender thumbnail visual seluruh halaman di browser Anda."
+          title="Memuat Halaman..."
+          subtitle="Menyiapkan pratinjau seluruh halaman."
         />
       )}
 
       {isProcessing && (
         <ProcessingState
-          title="Menerapkan Perubahan Urutan..."
-          subtitle="Menghasilkan dokumen PDF baru sesuai susunan yang Anda tentukan."
+          title="Menyusun Dokumen..."
+          subtitle="Menerapkan susunan halaman yang Anda pilih."
         />
       )}
 
@@ -193,20 +191,19 @@ export default function OrganizePdfPage() {
             <FileDropzone
               onFilesSelected={handleFileSelected}
               multiple={false}
-              title="Pilih file PDF untuk diatur"
-              description="Tarik dan lepas dokumen PDF ke sini untuk melihat dan menata halaman secara visual."
-              buttonText="Pilih File PDF"
+              buttonText="Pilih file PDF"
+              description="atau letakkan PDF di sini"
             />
           ) : (
             <div className="space-y-6">
               {/* Top toolbar */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-stone-200 bg-white p-4 shadow-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-stone-200 bg-white p-4 shadow-xs">
                 <div>
                   <h3 className="text-sm font-bold text-stone-900">
                     {file.name}
                   </h3>
                   <p className="text-xs text-stone-500">
-                    Menyimpan {activePagesCount} dari {pages.length} halaman
+                    {activePagesCount} dari {pages.length} halaman aktif
                   </p>
                 </div>
 
@@ -214,16 +211,16 @@ export default function OrganizePdfPage() {
                   <button
                     type="button"
                     onClick={handleResetArrangement}
-                    className="inline-flex items-center gap-1.5 rounded-xl border border-stone-200 bg-stone-50 px-3 py-2 text-xs font-semibold text-stone-700 hover:bg-stone-100 transition-colors"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-stone-200 bg-stone-50 px-3 py-1.5 text-xs font-semibold text-stone-700 hover:bg-stone-100 transition-colors"
                   >
                     <RotateCcw className="h-3.5 w-3.5" />
-                    <span>Kembalikan Urutan Asli</span>
+                    <span>Urutan Semula</span>
                   </button>
 
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="rounded-xl border border-stone-200 bg-white px-3 py-2 text-xs font-semibold text-stone-500 hover:text-rose-600 transition-colors"
+                    className="rounded-lg border border-stone-200 bg-white px-3 py-1.5 text-xs font-semibold text-stone-500 hover:text-rose-600 transition-colors"
                   >
                     Ganti File
                   </button>
@@ -232,10 +229,10 @@ export default function OrganizePdfPage() {
                     type="button"
                     disabled={activePagesCount === 0}
                     onClick={handleProcessOrganize}
-                    className="inline-flex items-center gap-1.5 rounded-xl bg-rose-600 px-5 py-2 text-xs font-bold text-white shadow-sm hover:bg-rose-700 disabled:opacity-50 transition-all cursor-pointer"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-rose-600 px-4 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-rose-700 disabled:opacity-50 transition-all cursor-pointer"
                   >
                     <Check className="h-4 w-4" />
-                    <span>Simpan & Buat PDF</span>
+                    <span>Atur PDF</span>
                   </button>
                 </div>
               </div>
@@ -245,13 +242,12 @@ export default function OrganizePdfPage() {
                 {pages.map((p, idx) => (
                   <div
                     key={p.id}
-                    className={`relative flex flex-col items-center rounded-2xl border p-3 bg-white transition-all shadow-xs ${
+                    className={`relative flex flex-col items-center rounded-xl border p-3 bg-white transition-all shadow-2xs ${
                       p.isDeleted
-                        ? "border-red-200 bg-red-50/40 opacity-60"
-                        : "border-stone-200/90 hover:border-rose-400 hover:shadow-md"
+                        ? "border-red-200 bg-red-50/40 opacity-50"
+                        : "border-stone-200 hover:border-rose-400"
                     }`}
                   >
-                    {/* Page badge */}
                     <div className="flex items-center justify-between w-full mb-2 px-1">
                       <span className="text-[11px] font-bold text-stone-600">
                         Hal {p.originalIndex + 1}
@@ -263,23 +259,21 @@ export default function OrganizePdfPage() {
                       )}
                     </div>
 
-                    {/* Thumbnail Image */}
-                    <div className="relative w-full aspect-[3/4] flex items-center justify-center overflow-hidden rounded-xl bg-stone-100 border border-stone-100">
+                    <div className="relative w-full aspect-[3/4] flex items-center justify-center overflow-hidden rounded-lg bg-stone-100 border border-stone-100">
                       <img
                         src={p.thumbnail.dataUrl}
                         alt={`Halaman ${p.originalIndex + 1}`}
-                        className="max-h-full max-w-full object-contain transition-transform duration-200"
+                        className="max-h-full max-w-full object-contain transition-transform duration-150"
                         style={{ transform: `rotate(${p.rotation}deg)` }}
                       />
 
                       {p.isDeleted && (
-                        <div className="absolute inset-0 bg-red-950/40 backdrop-blur-[1px] flex items-center justify-center text-white font-bold text-xs uppercase tracking-wider">
+                        <div className="absolute inset-0 bg-red-950/40 flex items-center justify-center text-white font-bold text-xs uppercase tracking-wider">
                           Dihapus
                         </div>
                       )}
                     </div>
 
-                    {/* Page Controls */}
                     <div className="mt-3 flex items-center justify-between w-full pt-2 border-t border-stone-100">
                       <div className="flex items-center gap-1">
                         <button
@@ -307,7 +301,7 @@ export default function OrganizePdfPage() {
                           type="button"
                           onClick={() => handleRotatePage(idx)}
                           className="p-1 text-stone-400 hover:text-rose-600"
-                          title="Putar 90 derajat"
+                          title="Putar 90°"
                         >
                           <RotateCw className="h-3.5 w-3.5" />
                         </button>
@@ -319,7 +313,7 @@ export default function OrganizePdfPage() {
                               ? "text-emerald-600 hover:text-emerald-700"
                               : "text-stone-400 hover:text-rose-600"
                           }`}
-                          title={p.isDeleted ? "Pulihkan halaman" : "Hapus halaman"}
+                          title={p.isDeleted ? "Batal hapus" : "Hapus halaman"}
                         >
                           {p.isDeleted ? (
                             <Undo2 className="h-3.5 w-3.5" />

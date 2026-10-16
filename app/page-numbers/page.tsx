@@ -81,9 +81,8 @@ export default function PageNumbersPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
       <ToolHeader
-        category="Edit PDF"
-        title="Tambahkan Nomor Halaman PDF"
-        subtitle="Sisipkan penomoran halaman otomatis secara presisi pada posisi header atau footer sesuai ukuran asli dokumen."
+        title="Tambahkan nomor halaman ke PDF"
+        subtitle="Sisipkan penomoran halaman otomatis pada posisi header atau footer dokumen Anda."
       />
 
       {errorMessage && (
@@ -94,8 +93,8 @@ export default function PageNumbersPage() {
 
       {isProcessing && (
         <ProcessingState
-          title="Menyematkan Nomor Halaman..."
-          subtitle="Menghitung koordinat dan menyisipkan teks penomoran di browser."
+          title="Menambahkan Nomor Halaman..."
+          subtitle="Menyematkan nomor halaman pada dokumen."
         />
       )}
 
@@ -115,34 +114,31 @@ export default function PageNumbersPage() {
             <FileDropzone
               onFilesSelected={handleFileSelected}
               multiple={false}
-              title="Pilih file PDF untuk diberi nomor halaman"
-              description="Seret dan lepas dokumen PDF ke sini atau klik tombol untuk memilih."
-              buttonText="Pilih File PDF"
+              buttonText="Pilih file PDF"
+              description="atau letakkan PDF di sini"
             />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="md:col-span-2 space-y-4">
-                <div className="flex items-center justify-between rounded-2xl border border-stone-200 bg-white p-5 shadow-xs">
+                <div className="flex items-center justify-between rounded-xl border border-stone-200 bg-white p-5 shadow-xs">
                   <div>
                     <h4 className="text-sm font-bold text-stone-900 truncate max-w-sm">
                       {file.name}
                     </h4>
-                    <p className="text-xs text-stone-400">
-                      Total {totalPages} Halaman Terdeteksi
+                    <p className="text-xs text-stone-500">
+                      Total {totalPages} Halaman
                     </p>
                   </div>
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="text-xs font-medium text-stone-400 hover:text-rose-600"
+                    className="text-xs font-semibold text-stone-400 hover:text-rose-600"
                   >
                     Ganti File
                   </button>
                 </div>
 
-                {/* Configuration Card */}
-                <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-xs space-y-5">
-                  {/* Position grid */}
+                <div className="rounded-xl border border-stone-200 bg-white p-6 shadow-xs space-y-5">
                   <div className="space-y-2">
                     <label className="text-xs font-bold uppercase tracking-wider text-stone-700 block">
                       Posisi Penomoran
@@ -160,9 +156,9 @@ export default function PageNumbersPage() {
                           key={pos.id}
                           type="button"
                           onClick={() => setPosition(pos.id as PageNumberOptions["position"])}
-                          className={`py-2.5 px-2 text-xs font-bold rounded-xl border text-center transition-all ${
+                          className={`py-2 px-2 text-xs font-bold rounded-lg border text-center transition-all ${
                             position === pos.id
-                              ? "border-rose-500 bg-rose-50 text-rose-700 ring-1 ring-rose-500/20"
+                              ? "border-rose-500 bg-rose-50 text-rose-700"
                               : "border-stone-200 bg-white text-stone-600 hover:bg-stone-50"
                           }`}
                         >
@@ -172,45 +168,43 @@ export default function PageNumbersPage() {
                     </div>
                   </div>
 
-                  {/* Format */}
                   <div className="space-y-2 pt-3 border-t border-stone-100">
                     <label className="text-xs font-bold uppercase tracking-wider text-stone-700 block">
-                      Format Penomoran
+                      Format Nomor
                     </label>
                     <div className="grid grid-cols-2 gap-3">
                       <button
                         type="button"
                         onClick={() => setFormat("page-of-total")}
-                        className={`p-3 rounded-xl border text-left transition-all ${
+                        className={`p-3 rounded-lg border text-left transition-all ${
                           format === "page-of-total"
-                            ? "border-rose-500 bg-rose-50 text-rose-800 ring-1 ring-rose-500/20"
+                            ? "border-rose-500 bg-rose-50 text-rose-800"
                             : "border-stone-200 bg-white text-stone-600 hover:bg-stone-50"
                         }`}
                       >
                         <span className="font-bold text-xs block">Halaman n dari Total</span>
-                        <span className="text-[11px] text-stone-400">Contoh: Halaman 1 dari 10</span>
+                        <span className="text-[11px] text-stone-500">Contoh: Halaman 1 dari 10</span>
                       </button>
 
                       <button
                         type="button"
                         onClick={() => setFormat("number")}
-                        className={`p-3 rounded-xl border text-left transition-all ${
+                        className={`p-3 rounded-lg border text-left transition-all ${
                           format === "number"
-                            ? "border-rose-500 bg-rose-50 text-rose-800 ring-1 ring-rose-500/20"
+                            ? "border-rose-500 bg-rose-50 text-rose-800"
                             : "border-stone-200 bg-white text-stone-600 hover:bg-stone-50"
                         }`}
                       >
                         <span className="font-bold text-xs block">Angka Sederhana</span>
-                        <span className="text-[11px] text-stone-400">Contoh: 1, 2, 3</span>
+                        <span className="text-[11px] text-stone-500">Contoh: 1, 2, 3</span>
                       </button>
                     </div>
                   </div>
 
-                  {/* Numbers starting */}
                   <div className="grid grid-cols-2 gap-4 pt-3 border-t border-stone-100">
                     <div className="space-y-1">
                       <label className="text-xs font-semibold text-stone-700 block">
-                        Mulai dari Halaman Dokumen
+                        Mulai dari Halaman
                       </label>
                       <input
                         type="number"
@@ -218,20 +212,20 @@ export default function PageNumbersPage() {
                         max={totalPages}
                         value={startPage}
                         onChange={(e) => setStartPage(Math.max(1, Number(e.target.value)))}
-                        className="w-full rounded-xl border border-stone-200 px-3 py-2 text-xs font-medium text-stone-800"
+                        className="w-full rounded-lg border border-stone-200 px-3 py-2 text-xs font-medium text-stone-800"
                       />
                     </div>
 
                     <div className="space-y-1">
                       <label className="text-xs font-semibold text-stone-700 block">
-                        Nomor Pertama yang Ditampilkan
+                        Nomor Pertama
                       </label>
                       <input
                         type="number"
                         min="1"
                         value={startNumber}
                         onChange={(e) => setStartNumber(Math.max(1, Number(e.target.value)))}
-                        className="w-full rounded-xl border border-stone-200 px-3 py-2 text-xs font-medium text-stone-800"
+                        className="w-full rounded-lg border border-stone-200 px-3 py-2 text-xs font-medium text-stone-800"
                       />
                     </div>
                   </div>
@@ -239,9 +233,9 @@ export default function PageNumbersPage() {
               </div>
 
               {/* Action sidebar */}
-              <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-xs h-fit space-y-4">
+              <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-xs h-fit space-y-4">
                 <h3 className="text-sm font-bold text-stone-900">
-                  Ringkasan Penomoran
+                  Ringkasan
                 </h3>
 
                 <div className="text-xs text-stone-600 space-y-2 py-2 border-y border-stone-100">
@@ -249,19 +243,15 @@ export default function PageNumbersPage() {
                     <span className="text-stone-400">Posisi:</span>
                     <span className="font-semibold capitalize">{(position || "bottom-center").replace("-", " ")}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-stone-400">Halaman Awal:</span>
-                    <span className="font-semibold">Hal {startPage} (Nomor {startNumber})</span>
-                  </div>
                 </div>
 
                 <button
                   type="button"
                   onClick={handleProcessPageNumbers}
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-rose-600 px-4 py-3 text-sm font-bold text-white shadow-md shadow-rose-600/20 hover:bg-rose-700 transition-all cursor-pointer"
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-rose-600 px-4 py-3.5 text-sm font-bold text-white shadow-md hover:bg-rose-700 transition-all cursor-pointer"
                 >
                   <FileDigit className="h-4 w-4" />
-                  <span>Tambahkan Nomor Halaman</span>
+                  <span>Tambahkan Nomor</span>
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </div>

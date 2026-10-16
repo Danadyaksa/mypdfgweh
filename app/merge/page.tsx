@@ -95,9 +95,8 @@ export default function MergePdfPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
       <ToolHeader
-        category="Atur PDF"
-        title="Gabungkan File PDF"
-        subtitle="Satukan beberapa dokumen PDF menjadi satu file berurutan secara cepat tanpa batasan kuota."
+        title="Gabungkan file PDF"
+        subtitle="Gabungkan PDF dengan urutan yang Anda inginkan dengan penggabungan PDF termudah."
       />
 
       {errorMessage && (
@@ -108,14 +107,14 @@ export default function MergePdfPage() {
 
       {isProcessing && (
         <ProcessingState
-          title="Sedang Menggabungkan Dokumen..."
-          subtitle="Menyatukan seluruh halaman sesuai urutan yang Anda tentukan di browser."
+          title="Menggabungkan PDF..."
+          subtitle="Menyatukan dokumen Anda sesuai urutan yang dipilih."
         />
       )}
 
       {!isProcessing && resultBlob && (
         <DownloadCard
-          title="Dokumen PDF Berhasil Digabungkan!"
+          title="File PDF Berhasil Digabungkan!"
           filename={outputFilename}
           fileSizeBytes={resultBlob.size}
           onDownload={handleDownload}
@@ -129,9 +128,8 @@ export default function MergePdfPage() {
             <FileDropzone
               multiple
               onFilesSelected={handleFilesSelected}
-              title="Pilih beberapa file PDF"
-              description="Tarik dan lepas file ke sini atau klik tombol untuk memilih dokumen dari perangkat Anda."
-              buttonText="Pilih File PDF"
+              buttonText="Pilih beberapa file PDF"
+              description="atau letakkan PDF di sini"
             />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -146,16 +144,16 @@ export default function MergePdfPage() {
               </div>
 
               {/* Sidebar Settings */}
-              <div className="flex flex-col justify-between rounded-2xl border border-stone-200 bg-white p-5 shadow-xs h-fit space-y-4">
+              <div className="flex flex-col justify-between rounded-xl border border-stone-200 bg-white p-5 shadow-xs h-fit space-y-4">
                 <div>
                   <h3 className="text-sm font-bold text-stone-900 mb-1">
-                    Pengaturan Gabung
+                    Pengaturan
                   </h3>
                   <p className="text-xs text-stone-500 mb-4">
-                    Gunakan tombol panah untuk menata urutan dokumen sebelum digabungkan.
+                    Gunakan panah untuk mengubah urutan sebelum menggabungkan.
                   </p>
 
-                  <div className="space-y-2">
+                  <div className="space-y-1.5">
                     <label className="text-xs font-semibold text-stone-700">
                       Nama File Hasil
                     </label>
@@ -164,7 +162,7 @@ export default function MergePdfPage() {
                       value={outputFilename}
                       onChange={(e) => setOutputFilename(e.target.value)}
                       placeholder="nama_file.pdf"
-                      className="w-full rounded-xl border border-stone-200 px-3 py-2 text-xs font-medium text-stone-800 focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
+                      className="w-full rounded-lg border border-stone-200 px-3 py-2 text-xs font-medium text-stone-800 focus:border-rose-500 focus:outline-none"
                     />
                   </div>
                 </div>
@@ -174,7 +172,7 @@ export default function MergePdfPage() {
                     type="button"
                     disabled={files.length < 2}
                     onClick={handleProcessMerge}
-                    className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-rose-600 px-4 py-3 text-sm font-bold text-white shadow-md shadow-rose-600/20 hover:bg-rose-700 disabled:opacity-50 disabled:hover:bg-rose-600 transition-all cursor-pointer disabled:cursor-not-allowed"
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-rose-600 px-4 py-3.5 text-sm font-bold text-white shadow-md hover:bg-rose-700 disabled:opacity-50 transition-all cursor-pointer disabled:cursor-not-allowed"
                   >
                     <Layers className="h-4 w-4" />
                     <span>Gabungkan PDF ({files.length})</span>
@@ -184,9 +182,9 @@ export default function MergePdfPage() {
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="text-xs font-medium text-stone-400 hover:text-stone-700 py-1 transition-colors"
+                    className="text-xs font-semibold text-stone-400 hover:text-stone-700 py-1 transition-colors"
                   >
-                    Batal & Bersihkan Antrean
+                    Batal
                   </button>
                 </div>
               </div>

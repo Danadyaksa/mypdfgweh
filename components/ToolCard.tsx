@@ -12,7 +12,6 @@ import {
   Stamp,
   FileDigit,
   Minimize2,
-  ArrowRight,
 } from "lucide-react";
 import { ToolItem } from "@/types/tools";
 
@@ -21,64 +20,78 @@ interface ToolCardProps {
 }
 
 export function ToolCard({ tool }: ToolCardProps) {
-  const renderIcon = () => {
-    const props = { className: "h-6 w-6 text-rose-600 transition-transform group-hover:scale-110 duration-200" };
-    switch (tool.icon) {
-      case "Layers":
-        return <Layers {...props} />;
-      case "Scissors":
-        return <Scissors {...props} />;
-      case "LayoutGrid":
-        return <LayoutGrid {...props} />;
-      case "RotateCw":
-        return <RotateCw {...props} />;
-      case "Image":
-        return <Image {...props} />;
-      case "FileImage":
-        return <FileImage {...props} />;
-      case "Stamp":
-        return <Stamp {...props} />;
-      case "FileDigit":
-        return <FileDigit {...props} />;
-      case "Minimize2":
-        return <Minimize2 {...props} />;
+  const getIconConfig = () => {
+    switch (tool.id) {
+      case "merge":
+        return {
+          icon: <Layers className="h-7 w-7 text-[#E11D48]" />,
+          bg: "bg-rose-50",
+        };
+      case "split":
+        return {
+          icon: <Scissors className="h-7 w-7 text-[#EA580C]" />,
+          bg: "bg-orange-50",
+        };
+      case "compress":
+        return {
+          icon: <Minimize2 className="h-7 w-7 text-[#16A34A]" />,
+          bg: "bg-green-50",
+        };
+      case "organize":
+        return {
+          icon: <LayoutGrid className="h-7 w-7 text-[#2563EB]" />,
+          bg: "bg-blue-50",
+        };
+      case "rotate":
+        return {
+          icon: <RotateCw className="h-7 w-7 text-[#7C3AED]" />,
+          bg: "bg-purple-50",
+        };
+      case "jpg-to-pdf":
+        return {
+          icon: <Image className="h-7 w-7 text-[#D97706]" />,
+          bg: "bg-amber-50",
+        };
+      case "pdf-to-jpg":
+        return {
+          icon: <FileImage className="h-7 w-7 text-[#0891B2]" />,
+          bg: "bg-cyan-50",
+        };
+      case "watermark":
+        return {
+          icon: <Stamp className="h-7 w-7 text-[#DC2626]" />,
+          bg: "bg-red-50",
+        };
+      case "page-numbers":
+        return {
+          icon: <FileDigit className="h-7 w-7 text-[#4F46E5]" />,
+          bg: "bg-indigo-50",
+        };
       default:
-        return <Layers {...props} />;
+        return {
+          icon: <Layers className="h-7 w-7 text-[#E11D48]" />,
+          bg: "bg-rose-50",
+        };
     }
   };
+
+  const { icon, bg } = getIconConfig();
 
   return (
     <Link
       href={tool.href}
-      className="group relative flex flex-col justify-between rounded-2xl border border-stone-200/90 bg-white p-6 shadow-sm hover:shadow-md hover:border-rose-300/80 transition-all duration-200 hover:-translate-y-1"
+      className="group flex flex-col rounded-xl border border-stone-200/90 bg-white p-6 shadow-xs hover:border-rose-400 hover:shadow-md transition-all duration-150"
     >
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-rose-50/80 ring-1 ring-rose-200/50 group-hover:bg-rose-100/70 transition-colors">
-            {renderIcon()}
-          </div>
-          {tool.isPopular && (
-            <span className="rounded-full bg-rose-50 px-2.5 py-0.5 text-[11px] font-semibold text-rose-700 ring-1 ring-inset ring-rose-600/20">
-              Populer
-            </span>
-          )}
-        </div>
-
-        <h3 className="text-base font-bold text-stone-900 group-hover:text-rose-600 transition-colors mb-2">
-          {tool.name}
-        </h3>
-        <p className="text-xs sm:text-sm text-stone-500 line-clamp-2 leading-relaxed">
-          {tool.shortDesc}
-        </p>
+      <div className={`flex h-14 w-14 items-center justify-center rounded-xl ${bg} mb-4 group-hover:scale-105 transition-transform`}>
+        {icon}
       </div>
 
-      <div className="mt-5 pt-4 border-t border-stone-100 flex items-center justify-between text-xs font-semibold text-stone-400 group-hover:text-rose-600 transition-colors">
-        <span>{tool.categoryLabel}</span>
-        <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-          Buka Alat
-          <ArrowRight className="h-3.5 w-3.5" />
-        </span>
-      </div>
+      <h3 className="text-base font-bold text-stone-900 group-hover:text-rose-600 transition-colors mb-2">
+        {tool.name}
+      </h3>
+      <p className="text-xs sm:text-sm text-stone-500 leading-relaxed font-normal">
+        {tool.shortDesc}
+      </p>
     </Link>
   );
 }

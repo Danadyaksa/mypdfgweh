@@ -9,12 +9,12 @@ import { ErrorAlert } from "@/components/ErrorAlert";
 import { addWatermarkToPdf, WatermarkOptions } from "@/lib/pdf/watermark";
 import { downloadBlob, fileToArrayBuffer } from "@/lib/utils";
 import { PDFDocument } from "pdf-lib";
-import { Stamp, ArrowRight, FileText } from "lucide-react";
+import { Stamp, ArrowRight } from "lucide-react";
 
 export default function WatermarkPage() {
   const [file, setFile] = useState<File | null>(null);
   const [totalPages, setTotalPages] = useState<number>(0);
-  const [text, setText] = useState<string>("RAHASIA / CONFIDENTIAL");
+  const [text, setText] = useState<string>("RAHASIA");
   const [fontSize, setFontSize] = useState<number>(48);
   const [colorHex, setColorHex] = useState<string>("#e11d48");
   const [opacity, setOpacity] = useState<number>(0.25);
@@ -88,9 +88,8 @@ export default function WatermarkPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
       <ToolHeader
-        category="Edit PDF"
-        title="Tambahkan Tanda Air (Watermark) Teks"
-        subtitle="Lindungi hak cipta atau tandai status dokumen (Rahasia, Draft, Salinan) dengan teks kustom yang elegan."
+        title="Tambahkan tanda air ke PDF"
+        subtitle="Bubuhkan cap teks tanda air ke dokumen PDF Anda dalam hitungan detik."
       />
 
       {errorMessage && (
@@ -101,8 +100,8 @@ export default function WatermarkPage() {
 
       {isProcessing && (
         <ProcessingState
-          title="Menyematkan Tanda Air..."
-          subtitle="Menggambar teks watermark ke setiap halaman dokumen PDF di memori browser."
+          title="Menambahkan Tanda Air..."
+          subtitle="Membubuhkan teks watermark ke dokumen."
         />
       )}
 
@@ -122,33 +121,31 @@ export default function WatermarkPage() {
             <FileDropzone
               onFilesSelected={handleFileSelected}
               multiple={false}
-              title="Pilih file PDF untuk diberi tanda air"
-              description="Seret dan lepas dokumen PDF ke sini atau klik tombol untuk memilih."
-              buttonText="Pilih File PDF"
+              buttonText="Pilih file PDF"
+              description="atau letakkan PDF di sini"
             />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="md:col-span-2 space-y-4">
-                <div className="flex items-center justify-between rounded-2xl border border-stone-200 bg-white p-5 shadow-xs">
+                <div className="flex items-center justify-between rounded-xl border border-stone-200 bg-white p-5 shadow-xs">
                   <div>
                     <h4 className="text-sm font-bold text-stone-900 truncate max-w-sm">
                       {file.name}
                     </h4>
-                    <p className="text-xs text-stone-400">
-                      Total {totalPages} Halaman Dokumen
+                    <p className="text-xs text-stone-500">
+                      Total {totalPages} Halaman
                     </p>
                   </div>
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="text-xs font-medium text-stone-400 hover:text-rose-600"
+                    className="text-xs font-semibold text-stone-400 hover:text-rose-600"
                   >
                     Ganti File
                   </button>
                 </div>
 
-                {/* Settings Card */}
-                <div className="rounded-2xl border border-stone-200 bg-white p-6 shadow-xs space-y-5">
+                <div className="rounded-xl border border-stone-200 bg-white p-6 shadow-xs space-y-5">
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold uppercase tracking-wider text-stone-700 block">
                       Teks Tanda Air
@@ -158,15 +155,14 @@ export default function WatermarkPage() {
                       value={text}
                       onChange={(e) => setText(e.target.value)}
                       placeholder="CONTOH: DOKUMEN RAHASIA"
-                      className="w-full rounded-xl border border-stone-200 px-3.5 py-2.5 text-sm font-medium text-stone-800 focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20"
+                      className="w-full rounded-lg border border-stone-200 px-3 py-2 text-sm text-stone-800 focus:border-rose-500 focus:outline-none"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    {/* Font size */}
                     <div className="space-y-1.5">
                       <label className="text-xs font-semibold text-stone-700 block">
-                        Ukuran Font ({fontSize} pt)
+                        Ukuran ({fontSize} pt)
                       </label>
                       <input
                         type="range"
@@ -179,10 +175,9 @@ export default function WatermarkPage() {
                       />
                     </div>
 
-                    {/* Opacity */}
                     <div className="space-y-1.5">
                       <label className="text-xs font-semibold text-stone-700 block">
-                        Opasitas ({Math.round(opacity * 100)}%)
+                        Transparansi ({Math.round(opacity * 100)}%)
                       </label>
                       <input
                         type="range"
@@ -197,48 +192,45 @@ export default function WatermarkPage() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-4 pt-2 border-t border-stone-100">
-                    {/* Position */}
                     <div className="space-y-1.5">
                       <label className="text-xs font-semibold text-stone-700 block">
-                        Posisi Teks
+                        Posisi
                       </label>
                       <select
                         value={position}
                         onChange={(e) => setPosition(e.target.value as WatermarkOptions["position"])}
-                        className="w-full rounded-xl border border-stone-200 bg-white px-3 py-2 text-xs font-medium text-stone-800"
+                        className="w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-xs text-stone-800"
                       >
-                        <option value="center">Tengah (Center)</option>
+                        <option value="center">Tengah</option>
                         <option value="top-center">Atas Tengah</option>
                         <option value="bottom-center">Bawah Tengah</option>
-                        <option value="top-left">Pojok Kiri Atas</option>
-                        <option value="top-right">Pojok Kanan Atas</option>
-                        <option value="bottom-left">Pojok Kiri Bawah</option>
-                        <option value="bottom-right">Pojok Kanan Bawah</option>
+                        <option value="top-left">Kiri Atas</option>
+                        <option value="top-right">Kanan Atas</option>
+                        <option value="bottom-left">Kiri Bawah</option>
+                        <option value="bottom-right">Kanan Bawah</option>
                       </select>
                     </div>
 
-                    {/* Rotation */}
                     <div className="space-y-1.5">
                       <label className="text-xs font-semibold text-stone-700 block">
-                        Sudut Kemiringan
+                        Rotasi
                       </label>
                       <select
                         value={rotationDegrees}
                         onChange={(e) => setRotationDegrees(Number(e.target.value))}
-                        className="w-full rounded-xl border border-stone-200 bg-white px-3 py-2 text-xs font-medium text-stone-800"
+                        className="w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-xs text-stone-800"
                       >
-                        <option value="45">Diagonal Miring (45°)</option>
-                        <option value="0">Mendatar (0°)</option>
-                        <option value="90">Vertikal (90°)</option>
-                        <option value="-45">Diagonal Mundur (-45°)</option>
+                        <option value="45">Miring 45°</option>
+                        <option value="0">Mendatar 0°</option>
+                        <option value="90">Tegak 90°</option>
+                        <option value="-45">Miring -45°</option>
                       </select>
                     </div>
                   </div>
 
-                  {/* Color picker */}
                   <div className="space-y-2 pt-2 border-t border-stone-100">
                     <label className="text-xs font-semibold text-stone-700 block">
-                      Warna Tanda Air
+                      Warna
                     </label>
                     <div className="flex items-center gap-3">
                       {["#e11d48", "#ef4444", "#2563eb", "#16a34a", "#52525b", "#000000"].map((c) => (
@@ -249,7 +241,7 @@ export default function WatermarkPage() {
                           style={{ backgroundColor: c }}
                           className={`h-7 w-7 rounded-full border-2 transition-transform ${
                             colorHex.toLowerCase() === c.toLowerCase()
-                              ? "scale-125 border-stone-900 ring-2 ring-rose-400"
+                              ? "scale-110 border-stone-900"
                               : "border-white"
                           }`}
                         />
@@ -260,13 +252,12 @@ export default function WatermarkPage() {
               </div>
 
               {/* Action sidebar */}
-              <div className="rounded-2xl border border-stone-200 bg-white p-5 shadow-xs h-fit space-y-4">
+              <div className="rounded-xl border border-stone-200 bg-white p-5 shadow-xs h-fit space-y-4">
                 <h3 className="text-sm font-bold text-stone-900">
-                  Pratinjau Pengaturan
+                  Pratinjau
                 </h3>
 
-                <div className="rounded-xl border border-stone-200 bg-stone-50 p-4 aspect-[3/4] flex items-center justify-center overflow-hidden relative">
-                  <div className="absolute inset-2 border border-dashed border-stone-300 rounded pointer-events-none" />
+                <div className="rounded-lg border border-stone-200 bg-stone-50 p-4 aspect-[3/4] flex items-center justify-center overflow-hidden relative">
                   <span
                     className="font-bold text-center px-2 select-none"
                     style={{
@@ -283,10 +274,10 @@ export default function WatermarkPage() {
                 <button
                   type="button"
                   onClick={handleProcessWatermark}
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-rose-600 px-4 py-3 text-sm font-bold text-white shadow-md shadow-rose-600/20 hover:bg-rose-700 transition-all cursor-pointer"
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-rose-600 px-4 py-3.5 text-sm font-bold text-white shadow-md hover:bg-rose-700 transition-all cursor-pointer"
                 >
                   <Stamp className="h-4 w-4" />
-                  <span>Sematkan Watermark</span>
+                  <span>Tambahkan Tanda Air</span>
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </div>
