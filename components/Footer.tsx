@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import { FileText } from "lucide-react";
 
 export function Footer() {
   return (
@@ -9,16 +8,11 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 lg:gap-12">
           {/* Brand info */}
           <div className="md:col-span-2 space-y-3">
-            <Link href="/" className="flex items-center gap-2.5">
-              <img
-                src="/mypdfgwehlogo.png"
-                alt="MyPDFGweh Logo"
-                className="h-8 w-8 rounded-lg object-contain"
-              />
+            <Link href="/" className="inline-block py-1">
               <img
                 src="/myheart-pdf-logo.png"
-                alt="MyPDFGweh"
-                className="h-7 w-auto object-contain"
+                alt="mypdfgweh"
+                className="h-8 sm:h-9 w-auto object-contain"
               />
             </Link>
             <p className="text-xs sm:text-sm text-stone-500 max-w-sm leading-relaxed">

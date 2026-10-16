@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { FileText, Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { TOOLS_CONFIG } from "@/types/tools";
 
 export function Navbar() {
@@ -14,16 +14,11 @@ export function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand */}
         <div className="flex items-center gap-8">
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <img
-              src="/mypdfgwehlogo.png"
-              alt="MyPDFGweh Logo"
-              className="h-9 w-9 rounded-xl object-contain shadow-2xs group-hover:scale-105 transition-transform"
-            />
+          <Link href="/" className="flex items-center group py-1">
             <img
               src="/myheart-pdf-logo.png"
-              alt="MyPDFGweh"
-              className="h-8 sm:h-9 w-auto object-contain"
+              alt="mypdfgweh"
+              className="h-9 sm:h-10 lg:h-11 w-auto object-contain hover:scale-[1.02] transition-transform"
             />
           </Link>
 
