@@ -10,7 +10,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "mypdfgweh",
+  title: "MyPDFGweh",
   description:
     "Solusi pengolahan file PDF cepat, mudah, dan aman langsung di browser Anda. Gabungkan, pisahkan, atur, putar, konversi, dan kompres PDF dengan praktis.",
   icons: {

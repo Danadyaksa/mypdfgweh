@@ -17,7 +17,7 @@ export function Navbar() {
           <Link href="/" className="flex items-center group py-1">
             <img
               src="/myheart-pdf-logo.png"
-              alt="mypdfgweh"
+              alt="MyPDFGweh"
               className="h-9 sm:h-10 lg:h-11 w-auto object-contain hover:scale-[1.02] transition-transform"
             />
           </Link>

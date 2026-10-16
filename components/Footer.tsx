@@ -11,7 +11,7 @@ export function Footer() {
             <Link href="/" className="inline-block py-1">
               <img
                 src="/myheart-pdf-logo.png"
-                alt="mypdfgweh"
+                alt="MyPDFGweh"
                 className="h-8 sm:h-9 w-auto object-contain"
               />
             </Link>
