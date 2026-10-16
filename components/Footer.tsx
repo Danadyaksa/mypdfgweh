@@ -108,8 +108,9 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 border-t border-stone-100 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-stone-400 gap-2">
           <p>© 2026 MyPDFGweh. Hak cipta dilindungi.</p>
-          <p className="flex items-center gap-1 font-medium">
-            Dibuat oleh <span className="font-semibold text-stone-600">Aksa</span>
+          <p className="flex items-center gap-1.5 font-medium">
+            <span>Designed &amp; Engineered by</span>
+            <span className="font-semibold text-stone-700">Atilla Danadyaksa</span>
           </p>
         </div>
       </div>
