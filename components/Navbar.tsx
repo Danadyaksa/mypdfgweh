@@ -14,13 +14,17 @@ export function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand */}
         <div className="flex items-center gap-8">
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-rose-600 text-white font-bold shadow-xs">
-              <FileText className="h-5 w-5" />
-            </div>
-            <span className="font-extrabold text-xl tracking-tight text-stone-900">
-              MyPDF<span className="text-rose-600">Gweh</span>
-            </span>
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <img
+              src="/mypdfgwehlogo.png"
+              alt="MyPDFGweh Logo"
+              className="h-9 w-9 rounded-xl object-contain shadow-2xs group-hover:scale-105 transition-transform"
+            />
+            <img
+              src="/myheart-pdf-logo.png"
+              alt="MyPDFGweh"
+              className="h-8 sm:h-9 w-auto object-contain"
+            />
           </Link>
 
           {/* Desktop Nav Links */}

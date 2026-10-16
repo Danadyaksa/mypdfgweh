@@ -9,13 +9,17 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 lg:gap-12">
           {/* Brand info */}
           <div className="md:col-span-2 space-y-3">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-rose-600 text-white font-bold">
-                <FileText className="h-4 w-4" />
-              </div>
-              <span className="font-extrabold text-lg tracking-tight text-stone-900">
-                MyPDF<span className="text-rose-600">Gweh</span>
-              </span>
+            <Link href="/" className="flex items-center gap-2.5">
+              <img
+                src="/mypdfgwehlogo.png"
+                alt="MyPDFGweh Logo"
+                className="h-8 w-8 rounded-lg object-contain"
+              />
+              <img
+                src="/myheart-pdf-logo.png"
+                alt="MyPDFGweh"
+                className="h-7 w-auto object-contain"
+              />
             </Link>
             <p className="text-xs sm:text-sm text-stone-500 max-w-sm leading-relaxed">
               Peralatan PDF online untuk membantu menyelesaikan pekerjaan dokumen Anda dengan cepat dan mudah langsung dari browser.

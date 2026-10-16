@@ -10,9 +10,14 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "MyPDFGweh | Solusi Pengolah PDF Pribadi Cepat & Aman di Browser",
+  title: "MyPDFGweh | Peralatan PDF Online Cepat & Mudah",
   description:
-    "Alternatif modern untuk iLovePDF yang 100% memproses file langsung di browser Anda. Gabungkan, pisahkan, atur, putar, konversi, dan kompres PDF tanpa risiko privasi.",
+    "Solusi pengolahan file PDF cepat, mudah, dan aman langsung di browser Anda. Gabungkan, pisahkan, atur, putar, konversi, dan kompres PDF dengan praktis.",
+  icons: {
+    icon: "/mypdfgwehlogo.png",
+    shortcut: "/mypdfgwehlogo.png",
+    apple: "/mypdfgwehlogo.png",
+  },
   keywords: [
     "PDF",
     "gabungkan pdf",
@@ -22,10 +27,9 @@ export const metadata: Metadata = {
     "gambar ke pdf",
     "pdf ke gambar",
     "watermark pdf",
-    "client-side pdf",
     "MyPDFGweh",
   ],
-  authors: [{ name: "MyPDFGweh Team" }],
+  authors: [{ name: "Atilla Danadyaksa" }],
 };
 
 export default function RootLayout({
