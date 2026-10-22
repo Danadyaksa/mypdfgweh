@@ -5,9 +5,9 @@ export function Footer() {
   return (
     <footer className="mt-auto border-t border-stone-200 bg-white text-stone-600">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 lg:gap-12">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12">
           {/* Brand info */}
-          <div className="md:col-span-2 space-y-3">
+          <div className="col-span-2 md:col-span-2 space-y-3">
             <Link href="/" className="inline-block py-1">
               <img
                 src="/myheart-pdf-logo.png"
@@ -104,9 +104,9 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 border-t border-stone-100 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-stone-400 gap-2">
+        <div className="mt-8 sm:mt-12 border-t border-stone-100 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-stone-400 gap-3 text-center sm:text-left">
           <p>© 2026 MyPDFGweh. Hak cipta dilindungi.</p>
-          <p className="flex items-center gap-1.5 font-medium">
+          <p className="flex flex-wrap items-center justify-center sm:justify-end gap-1.5 font-medium">
             <span>Designed &amp; Engineered by</span>
             <span className="font-semibold text-stone-700">Atilla Danadyaksa</span>
           </p>

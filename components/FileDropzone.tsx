@@ -82,7 +82,7 @@ export function FileDropzone({
         onDrop={handleDrop}
         onClick={() => inputRef.current?.click()}
         className={cn(
-          "relative flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed p-10 sm:p-14 text-center transition-all duration-150",
+          "relative flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed p-6 sm:p-12 md:p-14 text-center transition-all duration-150",
           isDragOver
             ? "border-rose-500 bg-rose-50/70"
             : "border-stone-300 bg-white hover:border-rose-400 shadow-2xs"
@@ -99,13 +99,13 @@ export function FileDropzone({
 
         <button
           type="button"
-          className="inline-flex items-center gap-2 rounded-xl bg-rose-600 px-8 py-4 text-base font-bold text-white shadow-md hover:bg-rose-700 active:scale-[0.98] transition-all mb-4"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-rose-600 px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-bold text-white shadow-md hover:bg-rose-700 active:scale-[0.98] transition-all mb-3 sm:mb-4"
         >
-          <UploadCloud className="h-5 w-5" />
-          <span>{buttonText}</span>
+          <UploadCloud className="h-5 w-5 shrink-0" />
+          <span className="truncate">{buttonText}</span>
         </button>
 
-        <p className="text-sm text-stone-500 font-medium">
+        <p className="text-xs sm:text-sm text-stone-500 font-medium">
           {description}
         </p>
       </div>

@@ -97,7 +97,7 @@ export default function RotatePdfPage() {
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-4xl px-4 py-6 sm:py-10 sm:px-6 lg:px-8">
       <ToolHeader
         title="Putar file PDF"
         subtitle="Putar orientasi halaman PDF Anda searah jarum jam secara permanen."
@@ -138,13 +138,13 @@ export default function RotatePdfPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="md:col-span-2 space-y-4">
-                <div className="flex items-center justify-between rounded-xl border border-stone-200 bg-white p-5 shadow-xs">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-rose-50 text-rose-600">
+                <div className="flex items-center justify-between rounded-xl border border-stone-200 bg-white p-3.5 sm:p-5 shadow-xs">
+                  <div className="flex items-center gap-3 min-w-0 pr-2">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-rose-50 text-rose-600">
                       <FileText className="h-5 w-5" />
                     </div>
-                    <div>
-                      <h4 className="text-sm font-bold text-stone-900 truncate max-w-sm">
+                    <div className="min-w-0">
+                      <h4 className="text-sm font-bold text-stone-900 truncate max-w-[150px] sm:max-w-sm">
                         {file.name}
                       </h4>
                       <p className="text-xs text-stone-500">
@@ -155,32 +155,32 @@ export default function RotatePdfPage() {
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="text-xs font-semibold text-stone-400 hover:text-rose-600"
+                    className="text-xs font-semibold text-stone-400 hover:text-rose-600 shrink-0"
                   >
                     Ganti File
                   </button>
                 </div>
 
                 {/* Angle choice */}
-                <div className="rounded-xl border border-stone-200 bg-white p-6 shadow-xs space-y-4">
+                <div className="rounded-xl border border-stone-200 bg-white p-4 sm:p-6 shadow-xs space-y-4">
                   <h4 className="text-xs font-bold uppercase tracking-wider text-stone-700">
                     Pilih Sudut Rotasi
                   </h4>
 
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-3 gap-2 sm:gap-3">
                     {[90, 180, 270].map((angle) => (
                       <button
                         key={angle}
                         type="button"
                         onClick={() => setRotationAngle(angle as 90 | 180 | 270)}
-                        className={`flex flex-col items-center justify-center p-4 rounded-xl border text-sm font-bold transition-all ${
+                        className={`flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl border text-xs sm:text-sm font-bold transition-all ${
                           rotationAngle === angle
                             ? "border-rose-500 bg-rose-50/80 text-rose-700 ring-1 ring-rose-500/20"
                             : "border-stone-200 bg-white text-stone-700 hover:bg-stone-50"
                         }`}
                       >
                         <RotateCw
-                          className="h-6 w-6 mb-2 transition-transform duration-200"
+                          className="h-5 w-5 sm:h-6 sm:w-6 mb-1.5 sm:mb-2 transition-transform duration-200"
                           style={{ transform: `rotate(${angle}deg)` }}
                         />
                         <span>{angle}°</span>
@@ -229,7 +229,7 @@ export default function RotatePdfPage() {
                           value={customPagesStr}
                           onChange={(e) => setCustomPagesStr(e.target.value)}
                           placeholder="1-2"
-                          className="w-full rounded-lg border border-stone-200 px-3 py-2 text-xs font-mono text-stone-800"
+                          className="w-full rounded-lg border border-stone-200 px-3 py-2 text-base sm:text-xs font-mono text-stone-800"
                         />
                       </div>
                     )}

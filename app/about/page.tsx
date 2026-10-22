@@ -4,9 +4,9 @@ import { ArrowRight, CheckCircle } from "lucide-react";
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8 space-y-10">
+    <div className="mx-auto max-w-4xl px-4 py-8 sm:py-12 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
       <div className="text-center max-w-2xl mx-auto">
-        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-stone-900">
+        <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-stone-900">
           Tentang MyPDFGweh
         </h1>
         <p className="mt-3 text-sm sm:text-base text-stone-500 leading-relaxed font-normal">
@@ -15,7 +15,7 @@ export default function AboutPage() {
       </div>
 
       {/* Main Philosophy Card */}
-      <div className="rounded-2xl border border-stone-200 bg-white p-8 sm:p-10 shadow-xs space-y-4">
+      <div className="rounded-2xl border border-stone-200 bg-white p-6 sm:p-10 shadow-xs space-y-4">
         <h2 className="text-xl font-bold text-stone-900">
           Solusi Pengolahan Dokumen PDF
         </h2>

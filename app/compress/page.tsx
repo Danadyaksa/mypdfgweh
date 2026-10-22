@@ -54,7 +54,7 @@ export default function CompressPdfPage() {
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-4xl px-4 py-6 sm:py-10 sm:px-6 lg:px-8">
       <ToolHeader
         title="Kompres file PDF"
         subtitle="Kurangi ukuran file PDF dengan tetap mempertahankan kualitas dokumen."
@@ -111,9 +111,9 @@ export default function CompressPdfPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="md:col-span-2 space-y-4">
-                <div className="flex items-center justify-between rounded-xl border border-stone-200 bg-white p-5 shadow-xs">
-                  <div>
-                    <h4 className="text-sm font-bold text-stone-900 truncate max-w-sm">
+                <div className="flex items-center justify-between rounded-xl border border-stone-200 bg-white p-3.5 sm:p-5 shadow-xs">
+                  <div className="min-w-0 pr-2">
+                    <h4 className="text-sm font-bold text-stone-900 truncate max-w-[150px] sm:max-w-sm">
                       {file.name}
                     </h4>
                     <p className="text-xs text-stone-500 mt-0.5">
@@ -123,7 +123,7 @@ export default function CompressPdfPage() {
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="text-xs font-semibold text-stone-400 hover:text-rose-600"
+                    className="text-xs font-semibold text-stone-400 hover:text-rose-600 shrink-0"
                   >
                     Ganti File
                   </button>

@@ -93,7 +93,7 @@ export default function MergePdfPage() {
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-4xl px-4 py-6 sm:py-10 sm:px-6 lg:px-8">
       <ToolHeader
         title="Gabungkan file PDF"
         subtitle="Gabungkan PDF dengan urutan yang Anda inginkan dengan penggabungan PDF termudah."
@@ -144,7 +144,7 @@ export default function MergePdfPage() {
               </div>
 
               {/* Sidebar Settings */}
-              <div className="flex flex-col justify-between rounded-xl border border-stone-200 bg-white p-5 shadow-xs h-fit space-y-4">
+              <div className="flex flex-col justify-between rounded-xl border border-stone-200 bg-white p-4 sm:p-5 shadow-xs h-fit space-y-4">
                 <div>
                   <h3 className="text-sm font-bold text-stone-900 mb-1">
                     Pengaturan
@@ -162,7 +162,7 @@ export default function MergePdfPage() {
                       value={outputFilename}
                       onChange={(e) => setOutputFilename(e.target.value)}
                       placeholder="nama_file.pdf"
-                      className="w-full rounded-lg border border-stone-200 px-3 py-2 text-xs font-medium text-stone-800 focus:border-rose-500 focus:outline-none"
+                      className="w-full rounded-lg border border-stone-200 px-3 py-2 text-base sm:text-xs font-medium text-stone-800 focus:border-rose-500 focus:outline-none"
                     />
                   </div>
                 </div>

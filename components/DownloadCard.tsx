@@ -43,12 +43,12 @@ export function DownloadCard({
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-stone-200 bg-white p-8 sm:p-12 text-center shadow-xs max-w-xl mx-auto">
-      <h2 className="text-2xl sm:text-3xl font-extrabold text-stone-900 mb-2">
+    <div className="flex flex-col items-center justify-center rounded-2xl border border-stone-200 bg-white p-6 sm:p-12 text-center shadow-xs max-w-xl mx-auto w-full">
+      <h2 className="text-xl sm:text-3xl font-extrabold text-stone-900 mb-2">
         {title}
       </h2>
 
-      <p className="text-sm font-medium text-stone-600 max-w-md mb-2 truncate">
+      <p className="text-xs sm:text-sm font-medium text-stone-600 max-w-full px-2 mb-2 truncate">
         {filename}
       </p>
 

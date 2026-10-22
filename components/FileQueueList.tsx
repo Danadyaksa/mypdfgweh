@@ -81,14 +81,14 @@ export function FileQueueList({
               </div>
             </div>
 
-            <div className="flex items-center gap-1 shrink-0">
+            <div className="flex items-center gap-0.5 sm:gap-1 shrink-0">
               {allowReorder && onMoveUp && onMoveDown && (
                 <>
                   <button
                     type="button"
                     disabled={idx === 0}
                     onClick={() => onMoveUp(idx)}
-                    className="p-1.5 text-stone-400 hover:text-stone-700 disabled:opacity-30 disabled:hover:text-stone-400 transition-colors"
+                    className="min-h-[36px] min-w-[36px] flex items-center justify-center rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-100 disabled:opacity-20 disabled:hover:bg-transparent transition-colors"
                     title="Pindahkan ke atas"
                     aria-label="Pindahkan ke atas"
                   >
@@ -98,7 +98,7 @@ export function FileQueueList({
                     type="button"
                     disabled={idx === files.length - 1}
                     onClick={() => onMoveDown(idx)}
-                    className="p-1.5 text-stone-400 hover:text-stone-700 disabled:opacity-30 disabled:hover:text-stone-400 transition-colors"
+                    className="min-h-[36px] min-w-[36px] flex items-center justify-center rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-100 disabled:opacity-20 disabled:hover:bg-transparent transition-colors"
                     title="Pindahkan ke bawah"
                     aria-label="Pindahkan ke bawah"
                   >
@@ -110,7 +110,7 @@ export function FileQueueList({
               <button
                 type="button"
                 onClick={() => onRemove(idx)}
-                className="p-1.5 text-stone-400 hover:text-rose-600 transition-colors"
+                className="min-h-[36px] min-w-[36px] flex items-center justify-center rounded-lg text-stone-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
                 title="Hapus file"
                 aria-label="Hapus file"
               >

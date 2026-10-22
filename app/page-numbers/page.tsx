@@ -79,7 +79,7 @@ export default function PageNumbersPage() {
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-4xl px-4 py-6 sm:py-10 sm:px-6 lg:px-8">
       <ToolHeader
         title="Tambahkan nomor halaman ke PDF"
         subtitle="Sisipkan penomoran halaman otomatis pada posisi header atau footer dokumen Anda."
@@ -120,9 +120,9 @@ export default function PageNumbersPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="md:col-span-2 space-y-4">
-                <div className="flex items-center justify-between rounded-xl border border-stone-200 bg-white p-5 shadow-xs">
-                  <div>
-                    <h4 className="text-sm font-bold text-stone-900 truncate max-w-sm">
+                <div className="flex items-center justify-between rounded-xl border border-stone-200 bg-white p-3.5 sm:p-5 shadow-xs">
+                  <div className="min-w-0 pr-2">
+                    <h4 className="text-sm font-bold text-stone-900 truncate max-w-[150px] sm:max-w-sm">
                       {file.name}
                     </h4>
                     <p className="text-xs text-stone-500">
@@ -132,13 +132,13 @@ export default function PageNumbersPage() {
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="text-xs font-semibold text-stone-400 hover:text-rose-600"
+                    className="text-xs font-semibold text-stone-400 hover:text-rose-600 shrink-0"
                   >
                     Ganti File
                   </button>
                 </div>
 
-                <div className="rounded-xl border border-stone-200 bg-white p-6 shadow-xs space-y-5">
+                <div className="rounded-xl border border-stone-200 bg-white p-4 sm:p-6 shadow-xs space-y-5">
                   <div className="space-y-2">
                     <label className="text-xs font-bold uppercase tracking-wider text-stone-700 block">
                       Posisi Penomoran
@@ -212,7 +212,7 @@ export default function PageNumbersPage() {
                         max={totalPages}
                         value={startPage}
                         onChange={(e) => setStartPage(Math.max(1, Number(e.target.value)))}
-                        className="w-full rounded-lg border border-stone-200 px-3 py-2 text-xs font-medium text-stone-800"
+                        className="w-full rounded-lg border border-stone-200 px-3 py-2 text-base sm:text-xs font-medium text-stone-800"
                       />
                     </div>
 
@@ -225,7 +225,7 @@ export default function PageNumbersPage() {
                         min="1"
                         value={startNumber}
                         onChange={(e) => setStartNumber(Math.max(1, Number(e.target.value)))}
-                        className="w-full rounded-lg border border-stone-200 px-3 py-2 text-xs font-medium text-stone-800"
+                        className="w-full rounded-lg border border-stone-200 px-3 py-2 text-base sm:text-xs font-medium text-stone-800"
                       />
                     </div>
                   </div>

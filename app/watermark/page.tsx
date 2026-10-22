@@ -86,7 +86,7 @@ export default function WatermarkPage() {
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-4xl px-4 py-6 sm:py-10 sm:px-6 lg:px-8">
       <ToolHeader
         title="Tambahkan tanda air ke PDF"
         subtitle="Bubuhkan cap teks tanda air ke dokumen PDF Anda dalam hitungan detik."
@@ -127,9 +127,9 @@ export default function WatermarkPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="md:col-span-2 space-y-4">
-                <div className="flex items-center justify-between rounded-xl border border-stone-200 bg-white p-5 shadow-xs">
-                  <div>
-                    <h4 className="text-sm font-bold text-stone-900 truncate max-w-sm">
+                <div className="flex items-center justify-between rounded-xl border border-stone-200 bg-white p-3.5 sm:p-5 shadow-xs">
+                  <div className="min-w-0 pr-2">
+                    <h4 className="text-sm font-bold text-stone-900 truncate max-w-[150px] sm:max-w-sm">
                       {file.name}
                     </h4>
                     <p className="text-xs text-stone-500">
@@ -139,13 +139,13 @@ export default function WatermarkPage() {
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="text-xs font-semibold text-stone-400 hover:text-rose-600"
+                    className="text-xs font-semibold text-stone-400 hover:text-rose-600 shrink-0"
                   >
                     Ganti File
                   </button>
                 </div>
 
-                <div className="rounded-xl border border-stone-200 bg-white p-6 shadow-xs space-y-5">
+                <div className="rounded-xl border border-stone-200 bg-white p-4 sm:p-6 shadow-xs space-y-5">
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold uppercase tracking-wider text-stone-700 block">
                       Teks Tanda Air
@@ -155,7 +155,7 @@ export default function WatermarkPage() {
                       value={text}
                       onChange={(e) => setText(e.target.value)}
                       placeholder="CONTOH: DOKUMEN RAHASIA"
-                      className="w-full rounded-lg border border-stone-200 px-3 py-2 text-sm text-stone-800 focus:border-rose-500 focus:outline-none"
+                      className="w-full rounded-lg border border-stone-200 px-3 py-2 text-base sm:text-sm text-stone-800 focus:border-rose-500 focus:outline-none"
                     />
                   </div>
 
@@ -199,7 +199,7 @@ export default function WatermarkPage() {
                       <select
                         value={position}
                         onChange={(e) => setPosition(e.target.value as WatermarkOptions["position"])}
-                        className="w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-xs text-stone-800"
+                        className="w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-base sm:text-xs text-stone-800"
                       >
                         <option value="center">Tengah</option>
                         <option value="top-center">Atas Tengah</option>
@@ -218,7 +218,7 @@ export default function WatermarkPage() {
                       <select
                         value={rotationDegrees}
                         onChange={(e) => setRotationDegrees(Number(e.target.value))}
-                        className="w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-xs text-stone-800"
+                        className="w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-base sm:text-xs text-stone-800"
                       >
                         <option value="45">Miring 45°</option>
                         <option value="0">Mendatar 0°</option>

@@ -33,18 +33,18 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center">
       {/* Hero Section */}
-      <section className="w-full pt-10 pb-10 sm:pt-16 sm:pb-12 text-center px-4 sm:px-6">
+      <section className="w-full pt-6 pb-6 sm:pt-14 sm:pb-12 text-center px-4 sm:px-6">
         <div className="mx-auto max-w-4xl">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-stone-900 leading-tight">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-stone-900 leading-tight">
             Semua alat yang Anda butuhkan untuk bekerja dengan PDF di satu tempat
           </h1>
 
-          <p className="mt-4 text-base sm:text-lg text-stone-600 max-w-2xl mx-auto leading-relaxed font-normal">
+          <p className="mt-3 sm:mt-4 text-xs sm:text-base text-stone-600 max-w-2xl mx-auto leading-relaxed font-normal px-2">
             Setiap alat yang Anda butuhkan untuk mengolah PDF dengan mudah dan cepat. Gabungkan, pisahkan, kompres, konversi, putar, dan edit dokumen dalam hitungan detik.
           </p>
 
           {/* Search bar */}
-          <div className="mt-7 mx-auto max-w-md">
+          <div className="mt-5 sm:mt-7 mx-auto max-w-md w-full">
             <div className="relative flex items-center">
               <Search className="absolute left-3.5 h-4 w-4 text-stone-400" />
               <input
@@ -52,7 +52,7 @@ export default function HomePage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Cari alat PDF..."
-                className="w-full rounded-xl border border-stone-300 bg-white py-2.5 pl-10 pr-4 text-sm text-stone-800 placeholder:text-stone-400 focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20 shadow-2xs"
+                className="w-full rounded-xl border border-stone-300 bg-white py-2.5 pl-10 pr-4 text-base sm:text-sm text-stone-800 placeholder:text-stone-400 focus:border-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-500/20 shadow-2xs"
               />
               {searchQuery && (
                 <button
@@ -67,13 +67,13 @@ export default function HomePage() {
           </div>
 
           {/* Category Filter Tabs (iLovePDF style) */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
+          <div className="mt-5 sm:mt-6 flex items-center justify-start sm:justify-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar max-w-full pb-1 px-1">
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 type="button"
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`rounded-lg px-3.5 py-1.5 text-xs sm:text-sm font-semibold transition-colors ${
+                className={`shrink-0 rounded-lg px-3.5 py-1.5 text-xs sm:text-sm font-semibold transition-colors ${
                   selectedCategory === cat.id
                     ? "bg-stone-900 text-white"
                     : "bg-stone-100 text-stone-600 hover:bg-stone-200 hover:text-stone-900"
@@ -89,7 +89,7 @@ export default function HomePage() {
       {/* Tools Grid Section */}
       <section className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
         {filteredTools.length === 0 ? (
-          <div className="rounded-xl border border-stone-200 bg-white p-12 text-center">
+          <div className="rounded-xl border border-stone-200 bg-white p-8 sm:p-12 text-center">
             <p className="text-base font-semibold text-stone-800">
               Tidak ada alat yang cocok dengan &quot;{searchQuery}&quot;
             </p>
@@ -105,7 +105,7 @@ export default function HomePage() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
             {filteredTools.map((tool) => (
               <ToolCard key={tool.id} tool={tool} />
             ))}

@@ -149,7 +149,7 @@ export default function OrganizePdfPage() {
   const activePagesCount = pages.filter((p) => !p.isDeleted).length;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-6xl px-4 py-6 sm:py-10 sm:px-6 lg:px-8">
       <ToolHeader
         title="Atur halaman PDF"
         subtitle="Urutkan, putar, atau hapus halaman dari dokumen PDF Anda."
@@ -197,9 +197,9 @@ export default function OrganizePdfPage() {
           ) : (
             <div className="space-y-6">
               {/* Top toolbar */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-stone-200 bg-white p-4 shadow-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 rounded-xl border border-stone-200 bg-white p-3.5 sm:p-4 shadow-xs">
                 <div>
-                  <h3 className="text-sm font-bold text-stone-900">
+                  <h3 className="text-sm font-bold text-stone-900 truncate max-w-[200px] sm:max-w-md">
                     {file.name}
                   </h3>
                   <p className="text-xs text-stone-500">
@@ -207,11 +207,11 @@ export default function OrganizePdfPage() {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                   <button
                     type="button"
                     onClick={handleResetArrangement}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-stone-200 bg-stone-50 px-3 py-1.5 text-xs font-semibold text-stone-700 hover:bg-stone-100 transition-colors"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-stone-200 bg-stone-50 px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-stone-700 hover:bg-stone-100 transition-colors"
                   >
                     <RotateCcw className="h-3.5 w-3.5" />
                     <span>Urutan Semula</span>
@@ -220,7 +220,7 @@ export default function OrganizePdfPage() {
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="rounded-lg border border-stone-200 bg-white px-3 py-1.5 text-xs font-semibold text-stone-500 hover:text-rose-600 transition-colors"
+                    className="rounded-lg border border-stone-200 bg-white px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-stone-500 hover:text-rose-600 transition-colors"
                   >
                     Ganti File
                   </button>
@@ -229,7 +229,7 @@ export default function OrganizePdfPage() {
                     type="button"
                     disabled={activePagesCount === 0}
                     onClick={handleProcessOrganize}
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-rose-600 px-4 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-rose-700 disabled:opacity-50 transition-all cursor-pointer"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-rose-600 px-3 sm:px-4 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-rose-700 disabled:opacity-50 transition-all cursor-pointer"
                   >
                     <Check className="h-4 w-4" />
                     <span>Atur PDF</span>
@@ -275,13 +275,14 @@ export default function OrganizePdfPage() {
                     </div>
 
                     <div className="mt-3 flex items-center justify-between w-full pt-2 border-t border-stone-100">
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-0.5">
                         <button
                           type="button"
                           disabled={idx === 0}
                           onClick={() => handleMovePage(idx, "left")}
-                          className="p-1 text-stone-400 hover:text-stone-700 disabled:opacity-20"
+                          className="min-h-[30px] min-w-[30px] flex items-center justify-center rounded text-stone-400 hover:text-stone-700 hover:bg-stone-100 disabled:opacity-20"
                           title="Geser ke kiri"
+                          aria-label="Geser ke kiri"
                         >
                           <ArrowLeft className="h-3.5 w-3.5" />
                         </button>
@@ -289,31 +290,34 @@ export default function OrganizePdfPage() {
                           type="button"
                           disabled={idx === pages.length - 1}
                           onClick={() => handleMovePage(idx, "right")}
-                          className="p-1 text-stone-400 hover:text-stone-700 disabled:opacity-20"
+                          className="min-h-[30px] min-w-[30px] flex items-center justify-center rounded text-stone-400 hover:text-stone-700 hover:bg-stone-100 disabled:opacity-20"
                           title="Geser ke kanan"
+                          aria-label="Geser ke kanan"
                         >
                           <ArrowRight className="h-3.5 w-3.5" />
                         </button>
                       </div>
 
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-0.5">
                         <button
                           type="button"
                           onClick={() => handleRotatePage(idx)}
-                          className="p-1 text-stone-400 hover:text-rose-600"
+                          className="min-h-[30px] min-w-[30px] flex items-center justify-center rounded text-stone-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
                           title="Putar 90°"
+                          aria-label="Putar 90°"
                         >
                           <RotateCw className="h-3.5 w-3.5" />
                         </button>
                         <button
                           type="button"
                           onClick={() => handleToggleDeletePage(idx)}
-                          className={`p-1 transition-colors ${
+                          className={`min-h-[30px] min-w-[30px] flex items-center justify-center rounded transition-colors ${
                             p.isDeleted
-                              ? "text-emerald-600 hover:text-emerald-700"
-                              : "text-stone-400 hover:text-rose-600"
+                              ? "text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50"
+                              : "text-stone-400 hover:text-rose-600 hover:bg-rose-50"
                           }`}
                           title={p.isDeleted ? "Batal hapus" : "Hapus halaman"}
+                          aria-label={p.isDeleted ? "Batal hapus" : "Hapus halaman"}
                         >
                           {p.isDeleted ? (
                             <Undo2 className="h-3.5 w-3.5" />

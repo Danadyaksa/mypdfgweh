@@ -80,13 +80,13 @@ export function ToolCard({ tool }: ToolCardProps) {
   return (
     <Link
       href={tool.href}
-      className="group flex flex-col rounded-xl border border-stone-200/90 bg-white p-6 shadow-xs hover:border-rose-400 hover:shadow-md transition-all duration-150"
+      className="group flex flex-col rounded-xl sm:rounded-2xl border border-stone-200/90 bg-white p-4 sm:p-6 shadow-xs hover:border-rose-400 hover:shadow-md transition-all duration-150 active:scale-[0.99]"
     >
-      <div className={`flex h-14 w-14 items-center justify-center rounded-xl ${bg} mb-4 group-hover:scale-105 transition-transform`}>
+      <div className={`flex h-11 w-11 sm:h-14 sm:w-14 items-center justify-center rounded-xl ${bg} mb-3 sm:mb-4 group-hover:scale-105 transition-transform shrink-0`}>
         {icon}
       </div>
 
-      <h3 className="text-base font-bold text-stone-900 group-hover:text-rose-600 transition-colors mb-2">
+      <h3 className="text-sm sm:text-base font-bold text-stone-900 group-hover:text-rose-600 transition-colors mb-1 sm:mb-2">
         {tool.name}
       </h3>
       <p className="text-xs sm:text-sm text-stone-500 leading-relaxed font-normal">

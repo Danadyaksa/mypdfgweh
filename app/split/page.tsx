@@ -117,7 +117,7 @@ export default function SplitPdfPage() {
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-4xl px-4 py-6 sm:py-10 sm:px-6 lg:px-8">
       <ToolHeader
         title="Pisahkan file PDF"
         subtitle="Pisahkan satu halaman atau semuanya agar mudah dikonversi menjadi file PDF terpisah."
@@ -198,13 +198,13 @@ export default function SplitPdfPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="md:col-span-2 space-y-4">
-                <div className="flex items-center justify-between rounded-xl border border-stone-200 bg-white p-5 shadow-xs">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-rose-50 text-rose-600">
+                <div className="flex items-center justify-between rounded-xl border border-stone-200 bg-white p-3.5 sm:p-5 shadow-xs">
+                  <div className="flex items-center gap-3 min-w-0 pr-2">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-rose-50 text-rose-600">
                       <FileText className="h-5 w-5" />
                     </div>
-                    <div>
-                      <h4 className="text-sm font-bold text-stone-900 truncate max-w-sm">
+                    <div className="min-w-0">
+                      <h4 className="text-sm font-bold text-stone-900 truncate max-w-[150px] sm:max-w-sm">
                         {file.name}
                       </h4>
                       <p className="text-xs text-stone-500">
@@ -215,7 +215,7 @@ export default function SplitPdfPage() {
                   <button
                     type="button"
                     onClick={handleReset}
-                    className="text-xs font-semibold text-stone-400 hover:text-rose-600"
+                    className="text-xs font-semibold text-stone-400 hover:text-rose-600 shrink-0"
                   >
                     Ganti File
                   </button>
@@ -267,7 +267,7 @@ export default function SplitPdfPage() {
                       {ranges.map((r, idx) => (
                         <div
                           key={r.id}
-                          className="flex items-center gap-3 p-3 rounded-lg bg-stone-50 border border-stone-100"
+                          className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 p-3 rounded-lg bg-stone-50 border border-stone-100"
                         >
                           <div className="flex-1">
                             <label className="text-[10px] font-semibold text-stone-400 block mb-1">
@@ -278,7 +278,7 @@ export default function SplitPdfPage() {
                               value={r.name}
                               onChange={(e) => handleRangeChange(r.id, "name", e.target.value)}
                               placeholder={`Bagian_${idx + 1}`}
-                              className="w-full rounded-md border border-stone-200 bg-white px-2.5 py-1.5 text-xs text-stone-800"
+                              className="w-full rounded-md border border-stone-200 bg-white px-2.5 py-1.5 text-base sm:text-xs text-stone-800"
                             />
                           </div>
 
@@ -291,7 +291,7 @@ export default function SplitPdfPage() {
                               value={r.rangeStr}
                               onChange={(e) => handleRangeChange(r.id, "rangeStr", e.target.value)}
                               placeholder="1-3"
-                              className="w-full rounded-md border border-stone-200 bg-white px-2.5 py-1.5 text-xs text-stone-800 font-mono"
+                              className="w-full rounded-md border border-stone-200 bg-white px-2.5 py-1.5 text-base sm:text-xs text-stone-800 font-mono"
                             />
                           </div>
 
@@ -299,7 +299,7 @@ export default function SplitPdfPage() {
                             <button
                               type="button"
                               onClick={() => handleRemoveRange(r.id)}
-                              className="p-2 text-stone-400 hover:text-rose-600 mt-4 transition-colors"
+                              className="self-end sm:self-center p-2 text-stone-400 hover:text-rose-600 sm:mt-4 transition-colors"
                               title="Hapus rentang"
                             >
                               <Trash2 className="h-4 w-4" />

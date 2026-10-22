@@ -18,7 +18,7 @@ export function Navbar() {
             <img
               src="/myheart-pdf-logo.png"
               alt="MyPDFGweh"
-              className="h-9 sm:h-10 lg:h-11 w-auto object-contain hover:scale-[1.02] transition-transform"
+              className="h-8 sm:h-10 lg:h-11 w-auto object-contain hover:scale-[1.02] transition-transform"
             />
           </Link>
 
@@ -115,11 +115,11 @@ export function Navbar() {
               <Link
                 key={tool.id}
                 href={tool.href}
-                className="flex flex-col rounded-lg border border-stone-100 bg-stone-50 p-2.5 text-xs font-semibold text-stone-800 hover:bg-rose-50 hover:text-rose-700 transition-colors"
+                className="flex flex-col justify-center rounded-xl border border-stone-200/80 bg-stone-50/80 p-3 text-xs font-semibold text-stone-800 hover:bg-rose-50 hover:text-rose-700 active:bg-rose-100 transition-colors min-h-[52px]"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                <span>{tool.name}</span>
-                <span className="text-[10px] text-stone-400 font-normal">
+                <span className="font-bold text-stone-900">{tool.name}</span>
+                <span className="text-[10px] text-stone-400 font-normal mt-0.5">
                   {tool.categoryLabel}
                 </span>
               </Link>
